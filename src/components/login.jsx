@@ -1,61 +1,47 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import './Login.css';
 
-const Login = ({ setUsername, onLogin }) => {
-  const [inputValue, setInputValue] = useState('');
+export default function Login({ setUsername, onLogin }) {
+  const [input, setInput] = useState('');
 
   const handleLogin = () => {
-    if (inputValue.trim()) {
-      setUsername(inputValue);
+    if (input.trim()) {
+      setUsername(input.trim());
       onLogin();
     }
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white flex flex-col items-center justify-center overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white px-4">
       <motion.img
-        src="https://freeimage.host/i/F6GMm8u"
-        alt="FEVA Hotel Logo"
-        className="w-60 md:w-72 drop-shadow-xl mb-8 animate-fadeIn"
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
+        src="https://freeimage.host/images/2025/08/04/F6wOpgn.png"
+        alt="Room Key Graphic"
+        className="w-64 mb-8 rounded-xl shadow-lg"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1 }}
       />
 
       <motion.input
         type="text"
         placeholder="ROBLOX USERNAME"
-        className="bg-black border-2 border-white px-6 py-3 text-white text-center text-lg font-semibold tracking-widest w-80 mb-4 focus:outline-none hover:shadow-xl hover:border-green-400 transition duration-300"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        className="text-center text-lg font-semibold bg-transparent border-b-2 border-white outline-none placeholder-white/60 mb-6 w-72 focus:border-green-400 transition-all duration-300"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4 }}
       />
 
       <motion.button
         onClick={handleLogin}
-        className="w-80 bg-white text-black py-3 text-lg font-extrabold border-2 border-white hover:bg-green-500 hover:text-white transition duration-300 shadow-md"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
+        className="px-8 py-3 border-2 border-white text-white font-bold tracking-wide hover:bg-white hover:text-black transition-all duration-300 rounded-lg shadow-lg"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.6 }}
       >
         LOGIN
       </motion.button>
-
-      <motion.div
-        className="absolute bottom-4 text-sm text-white/50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-      >
-        &copy; {new Date().getFullYear()} FEVA Hotels. All rights reserved.
-      </motion.div>
     </div>
   );
-};
-
-export default Login;
+}
