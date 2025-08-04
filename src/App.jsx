@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Login from './components/Login';
+import Login from './components/login';
 import BookingCard from './components/BookingCard';
 import Admin from './components/Admin';
 
