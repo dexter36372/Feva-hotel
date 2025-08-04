@@ -8,7 +8,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white font-sans selection:bg-indigo-500">
       {!isLoggedIn ? (
         <Login setUsername={setUsername} onLogin={() => setIsLoggedIn(true)} />
       ) : username.toLowerCase() === "admin-access" ? (
