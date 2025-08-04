@@ -1,99 +1,64 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const BookingCard = ({ username }) => {
-  const checkInDate = '[DATE]';
-  const checkOutDate = '[DATE]';
-  const roomType = '[ROOM TYPE]';
-  const roomNumber = '[ROOM NUMBER]';
-
+export default function BookingCard({ username }) {
   return (
-    <div
-      className="w-screen h-screen bg-black text-white flex items-center justify-center px-4"
-      style={{ backgroundImage: "url('https://freeimage.host/images/2025/08/04/F6GMm8u.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
-    >
+    <div className="min-h-screen flex items-center justify-center bg-black text-white px-4 py-10">
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="bg-black bg-opacity-70 rounded-2xl p-6 md:p-10 w-full max-w-5xl shadow-xl border border-white/20"
+        className="w-full max-w-4xl bg-cover bg-center border-[6px] border-white rounded-xl shadow-2xl relative"
+        style={{ backgroundImage: "url('https://freeimage.host/images/2025/08/04/F6GMm8u.png')" }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
       >
-        {/* Dates Section */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-6">
+        {/* Dark overlay */}
+        <div className="bg-black/50 w-full h-full rounded-xl p-8">
+          {/* Header */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white text-black px-5 py-4 rounded-lg text-center shadow hover:scale-105 transform transition-transform"
+            className="mb-6"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
           >
-            <div className="font-extrabold text-sm md:text-lg">CHECK-IN</div>
-            <div className="text-xs md:text-sm mt-1">{checkInDate}</div>
+            <div className="flex gap-6 mb-6">
+              <div className="bg-black text-white px-4 py-2 shadow-xl">
+                <p className="text-sm font-bold">CHECK-IN</p>
+                <p className="text-xs">[DATE]</p>
+              </div>
+              <div className="bg-black text-white px-4 py-2 shadow-xl">
+                <p className="text-sm font-bold">CHECK-OUT</p>
+                <p className="text-xs">[DATE]</p>
+              </div>
+            </div>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-white text-black inline-block px-6 py-2 shadow-md">
+              FAREHAM PARK HOTEL & COUNTRY CLUB
+            </h1>
           </motion.div>
 
-          <span className="text-white text-3xl">➤</span>
-
+          {/* Info and Feedback */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white text-black px-5 py-4 rounded-lg text-center shadow hover:scale-105 transform transition-transform"
+            className="flex flex-col md:flex-row justify-between items-center mt-8 gap-6"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
           >
-            <div className="font-extrabold text-sm md:text-lg">CHECK-OUT</div>
-            <div className="text-xs md:text-sm mt-1">{checkOutDate}</div>
-          </motion.div>
-        </div>
+            <div className="text-left space-y-2">
+              <p className="font-bold text-lg">ROOM TYPE: <span className="font-normal">[ROOM TYPE]</span></p>
+              <p className="font-bold text-lg">ROOM NUMBER: <span className="font-normal">[ROOM NUMBER]</span></p>
+            </div>
 
-        {/* Hotel Title */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white text-black text-center py-3 px-6 rounded-lg shadow-lg font-black text-lg md:text-2xl mb-4"
-        >
-          FAREHAM PARK HOTEL & COUNTRY CLUB
-        </motion.div>
-
-        {/* Room Info */}
-        <div className="grid md:grid-cols-2 gap-4 mt-4 text-white text-sm md:text-lg font-semibold">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-            className="bg-white/20 p-3 rounded-lg border border-white/10 shadow"
-          >
-            ROOM TYPE: {roomType}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-            className="bg-white/20 p-3 rounded-lg border border-white/10 shadow"
-          >
-            ROOM NUMBER: {roomNumber}
+            <a
+              href="https://forms.gle/oTFCo7TRf4gJjYge7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-600 transition-all duration-300 text-white font-bold px-6 py-4 rounded-md shadow-lg text-center"
+            >
+              <p>DID YOU ENJOY YOUR STAY?</p>
+              <p className="underline mt-1">LET US KNOW</p>
+            </a>
           </motion.div>
         </div>
-
-        {/* Feedback Link */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-          className="mt-8 text-center"
-        >
-          <a
-            href="https://forms.gle/oTFCo7TRf4gJjYge7"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-lg shadow-md transition-all duration-300 text-sm md:text-lg"
-          >
-            DID YOU ENJOY YOUR STAY?<br />
-            <span className="underline">LET US KNOW</span>
-          </a>
-        </motion.div>
       </motion.div>
     </div>
   );
-};
-
-export default BookingCard;
+}
