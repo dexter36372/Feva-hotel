@@ -3,60 +3,55 @@ import { motion } from 'framer-motion';
 
 export default function BookingCard({ username }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white px-4 py-10">
+    <div
+      className="min-h-screen flex items-center justify-center bg-black text-white px-4"
+      style={{
+        backgroundImage: "url('https://freeimage.host/images/2025/08/03/F6GMm8u.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <motion.div
-        className="w-full max-w-4xl bg-cover bg-center border-[6px] border-white rounded-xl shadow-2xl relative"
-        style={{ backgroundImage: "url('https://freeimage.host/images/2025/08/04/F6GMm8u.png')" }}
+        className="bg-black/80 p-6 rounded-xl shadow-2xl border-4 border-white w-full max-w-3xl"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.6 }}
       >
-        {/* Dark overlay */}
-        <div className="bg-black/50 w-full h-full rounded-xl p-8">
-          {/* Header */}
-          <motion.div
-            className="mb-6"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="flex gap-6 mb-6">
-              <div className="bg-black text-white px-4 py-2 shadow-xl">
-                <p className="text-sm font-bold">CHECK-IN</p>
-                <p className="text-xs">[DATE]</p>
+        <div className="flex justify-between items-center mb-6">
+          <div className="text-left">
+            <div className="flex gap-4 mb-2">
+              <div className="bg-black text-white p-3 shadow-lg">
+                <div className="text-xs">CHECK-IN</div>
+                <div className="font-bold text-lg">[DATE]</div>
               </div>
-              <div className="bg-black text-white px-4 py-2 shadow-xl">
-                <p className="text-sm font-bold">CHECK-OUT</p>
-                <p className="text-xs">[DATE]</p>
+              <div className="bg-black text-white p-3 shadow-lg">
+                <div className="text-xs">CHECK-OUT</div>
+                <div className="font-bold text-lg">[DATE]</div>
               </div>
             </div>
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold bg-white text-black inline-block px-6 py-2 shadow-md">
+            <div className="bg-white text-black inline-block px-4 py-1 text-lg font-bold shadow-lg">
               FAREHAM PARK HOTEL & COUNTRY CLUB
-            </h1>
-          </motion.div>
-
-          {/* Info and Feedback */}
-          <motion.div
-            className="flex flex-col md:flex-row justify-between items-center mt-8 gap-6"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <div className="text-left space-y-2">
-              <p className="font-bold text-lg">ROOM TYPE: <span className="font-normal">[ROOM TYPE]</span></p>
-              <p className="font-bold text-lg">ROOM NUMBER: <span className="font-normal">[ROOM NUMBER]</span></p>
             </div>
+          </div>
+        </div>
 
-            <a
-              href="https://forms.gle/oTFCo7TRf4gJjYge7"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 transition-all duration-300 text-white font-bold px-6 py-4 rounded-md shadow-lg text-center"
-            >
-              <p>DID YOU ENJOY YOUR STAY?</p>
-              <p className="underline mt-1">LET US KNOW</p>
-            </a>
-          </motion.div>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="text-left text-white">
+            <p className="text-xl font-bold">ROOM TYPE: <span className="font-normal">[ROOM TYPE]</span></p>
+            <p className="text-xl font-bold">ROOM NUMBER: <span className="font-normal">[ROOM NUMBER]</span></p>
+          </div>
+
+          <motion.a
+            href="https://forms.gle/oTFCo7TRf4gJjYge7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-500 text-white px-6 py-3 text-center font-bold text-md shadow-xl hover:bg-white hover:text-green-600 transition-all duration-300 border-2 border-green-500"
+            whileHover={{ scale: 1.05 }}
+          >
+            <span>DID YOU ENJOY YOUR STAY?</span>
+            <br />
+            <u>LET US KNOW</u>
+          </motion.a>
         </div>
       </motion.div>
     </div>
