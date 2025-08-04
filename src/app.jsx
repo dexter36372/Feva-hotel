@@ -1,21 +1,11 @@
-import { useState } from 'react';
-import Login from './components/login';
-import BookingCard from './components/BookingCard';
-import Admin from './components/Admin';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-export default function App() {
-  const [username, setUsername] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+import './index.css'; // optional, for styling if you add it
 
-  return (
-    <div className="min-h-screen bg-black text-white">
-      {!isLoggedIn ? (
-        <Login setUsername={setUsername} onLogin={() => setIsLoggedIn(true)} />
-      ) : username.toLowerCase() === "admin-access" ? (
-        <Admin />
-      ) : (
-        <BookingCard username={username} />
-      )}
-    </div>
-  );
-}
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
