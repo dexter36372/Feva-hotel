@@ -8,10 +8,10 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div>
+    <div className="min-h-screen bg-black text-white">
       {!isLoggedIn ? (
         <Login setUsername={setUsername} onLogin={() => setIsLoggedIn(true)} />
-      ) : username === "admin-access" ? (
+      ) : username.toLowerCase() === "admin-access" ? (
         <Admin />
       ) : (
         <BookingCard username={username} />
