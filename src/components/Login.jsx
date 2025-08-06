@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { database, ref, get, child } from '../firebase'; // ✅ Firebase import
 
 export default function Login({ setUsername, onLogin }) {
   const [input, setInput] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (input.trim()) {
-      setUsername(input.trim());
-      onLogin();
+      const username = input.trim();
+      try {
+        const dbRef = ref(database);
+        const snapshot = await get(child(dbRef, `visits/${username}`));
+        if (snapshot.exists()) {
+          alert(`${username} has visited before ✅`);
+          setUsername(username);
+          onLogin();
+        } else {
+          alert(`${username} has never visited ❌`);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Something went wrong while checking the database.');
+      }
     }
   };
 
