@@ -1,12 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getDatabase, ref, get } from 'firebase/database';
 import { motion } from 'framer-motion';
 
 export default function BookingCard({ username }) {
+  const [hasVisited, setHasVisited] = useState(null);
+
+  useEffect(() => {
+    if (!username) return;
+
+    const db = getDatabase();
+    const visitRef = ref(db, `visits/${username.toLowerCase()}`);
+
+    get(visitRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setHasVisited(true);
+        } else {
+          setHasVisited(false);
+        }
+      })
+      .catch((error) => {
+        console.error('Error checking visit status:', error);
+        setHasVisited(false); // fallback
+      });
+  }, [username]);
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-black text-white px-4"
       style={{
-        backgroundImage: "url('https://freeimage.host/images/2025/08/03/F6GMm8u.png')",
+        backgroundImage: "url('https://ibb.co/RTRMvHc6')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -17,6 +40,17 @@ export default function BookingCard({ username }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
       >
+        {/* Dynamic welcome message */}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold">
+            {hasVisited === null
+              ? 'Checking your visit history...'
+              : hasVisited
+              ? `Welcome back, ${username}!`
+              : `You’ve never visited us before… maybe this is a sign to book!`}
+          </h2>
+        </div>
+
         <div className="flex justify-between items-center mb-6">
           <div className="text-left">
             <div className="flex gap-4 mb-2">
@@ -37,8 +71,12 @@ export default function BookingCard({ username }) {
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-left text-white">
-            <p className="text-xl font-bold">ROOM TYPE: <span className="font-normal">[ROOM TYPE]</span></p>
-            <p className="text-xl font-bold">ROOM NUMBER: <span className="font-normal">[ROOM NUMBER]</span></p>
+            <p className="text-xl font-bold">
+              ROOM TYPE: <span className="font-normal">[ROOM TYPE]</span>
+            </p>
+            <p className="text-xl font-bold">
+              ROOM NUMBER: <span className="font-normal">[ROOM NUMBER]</span>
+            </p>
           </div>
 
           <motion.a
