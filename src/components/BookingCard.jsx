@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { getDatabase, ref, get } from 'firebase/database';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function BookingCard({ username }) {
   const [hasVisited, setHasVisited] = useState(null);
+  const [bookingData, setBookingData] = useState(null);
 
   useEffect(() => {
-    const db = getDatabase();
-    const visitRef = ref(db, `visits/${username.toLowerCase()}`);
+    const checkVisitStatus = async () => {
+      try {
+        const userRef = doc(db, 'visits', username.toLowerCase());
+        const docSnap = await getDoc(userRef);
 
-    get(visitRef)
-      .then((snapshot) => {
-        setHasVisited(snapshot.exists());
-      })
-      .catch((err) => {
-        console.error("Error checking visit status:", err);
-        setHasVisited(false); // Fail safe
-      });
+        if (docSnap.exists()) {
+          setHasVisited(true);
+          setBookingData(docSnap.data()); // You can add real data here later
+        } else {
+          setHasVisited(false);
+        }
+      } catch (error) {
+        console.error('Error checking visit status:', error);
+        setHasVisited(false);
+      }
+    };
+
+    checkVisitStatus();
   }, [username]);
 
   if (hasVisited === null) {
-    return (
-      <div className="text-white min-h-screen flex justify-center items-center bg-black">
-        <p>Loading...</p>
-      </div>
-    );
+    return <div className="text-white text-center mt-20">Loading...</div>;
   }
 
   return (
@@ -49,11 +54,11 @@ export default function BookingCard({ username }) {
                 <div className="flex gap-4 mb-2">
                   <div className="bg-black text-white p-3 shadow-lg">
                     <div className="text-xs">CHECK-IN</div>
-                    <div className="font-bold text-lg">[DATE]</div>
+                    <div className="font-bold text-lg">{bookingData?.checkIn || '[DATE]'}</div>
                   </div>
                   <div className="bg-black text-white p-3 shadow-lg">
                     <div className="text-xs">CHECK-OUT</div>
-                    <div className="font-bold text-lg">[DATE]</div>
+                    <div className="font-bold text-lg">{bookingData?.checkOut || '[DATE]'}</div>
                   </div>
                 </div>
                 <div className="bg-white text-black inline-block px-4 py-1 text-lg font-bold shadow-lg">
@@ -64,8 +69,8 @@ export default function BookingCard({ username }) {
 
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="text-left text-white">
-                <p className="text-xl font-bold">ROOM TYPE: <span className="font-normal">[ROOM TYPE]</span></p>
-                <p className="text-xl font-bold">ROOM NUMBER: <span className="font-normal">[ROOM NUMBER]</span></p>
+                <p className="text-xl font-bold">ROOM TYPE: <span className="font-normal">{bookingData?.roomType || 'Standard Room'}</span></p>
+                <p className="text-xl font-bold">ROOM NUMBER: <span className="font-normal">{bookingData?.roomNumber || 'Not Allocated'}</span></p>
               </div>
 
               <motion.a
@@ -83,14 +88,10 @@ export default function BookingCard({ username }) {
           </>
         ) : (
           <div className="text-center space-y-6">
-            <h2 className="text-2xl font-bold">
-              You’ve never visited us before… maybe this is a sign to book!
-            </h2>
-
+            <h2 className="text-2xl font-bold">You’ve never visited us before… maybe this is a sign to book!</h2>
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              className="mt-6 px-8 py-3 bg-white text-black font-bold rounded-lg shadow-lg hover:bg-green-400 transition duration-300"
-              onClick={() => alert("Booking flow coming soon...")}
+              className="px-6 py-3 bg-white text-black font-bold rounded-lg hover:bg-green-500 hover:text-white transition-all duration-300 shadow-md"
+              whileHover={{ scale: 1.05 }}
             >
               BOOK NOW
             </motion.button>
